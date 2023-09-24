@@ -15,6 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -82,12 +86,14 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData) {
 }
 
 @Composable
-fun TextFieldGeneric(value: String, label: String) {
+fun TextFieldGeneric(initialValue: String, label: String) {
+    var value by remember { mutableStateOf(initialValue) }
+
     TextField(
         value = value,
-        onValueChange = { /* value = it */ },
+        onValueChange = { value = it },
         label = { Text(label) },
-        // placeholder = { Text("Input your real first and last names") },
+        placeholder = { Text("Do not leave this field empty") },
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.Transparent),
