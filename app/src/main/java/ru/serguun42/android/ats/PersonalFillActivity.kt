@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import ru.serguun42.android.ats.data.mock.PersonalDetailsMockData
 import ru.serguun42.android.ats.screens.PersonalDetailsScreen
 import ru.serguun42.android.ats.ui.theme.ATSTheme
 
@@ -19,7 +20,8 @@ class PersonalFillActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PersonalDetailsScreen("ATS application")
+                    val data = PersonalDetailsMockData()
+                    PersonalDetailsScreen(data)
                 }
             }
         }
