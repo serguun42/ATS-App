@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -21,13 +23,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.serguun42.android.ats.R
 import ru.serguun42.android.ats.data.mock.PersonalDetailsMockData
 import ru.serguun42.android.ats.ui.theme.ATSTheme
 import ru.serguun42.android.ats.ui.theme.EditorCardBackground
@@ -35,20 +40,29 @@ import ru.serguun42.android.ats.ui.theme.Primary600
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalDetailsScreen(data: PersonalDetailsMockData) {
+fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boolean = false) {
     val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp, 32.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp, 32.dp)
+            .background(
+                if (darkerBackground) Color(0xFF555555) else
+                    Color.Transparent
+            ),
+        verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(shape = RoundedCornerShape(10.dp), color = EditorCardBackground)
-                .padding(8.dp, 16.dp),
+                .padding(16.dp, 16.dp)
+                .paint(
+                    painterResource(id = R.drawable.baseline_person_24),
+                    alignment = Alignment.TopStart,
+                ),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
@@ -70,6 +84,35 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData) {
             TextFieldGeneric(data.locationCountry, "Current location country")
         }
 
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(shape = RoundedCornerShape(10.dp), color = EditorCardBackground)
+                .padding(16.dp, 16.dp)
+                .paint(
+                    painterResource(id = R.drawable.baseline_business_24),
+                    alignment = Alignment.TopStart
+                ),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = "Fill last workplace details",
+                color = Primary600,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Medium,
+                letterSpacing = (-0.4).sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 8.dp)
+            )
+
+            TextFieldGeneric(data.lastWorkPlace.companyName, "Company name")
+            TextFieldGeneric(data.lastWorkPlace.jobPosition, "Job position")
+            TextFieldGeneric(data.lastWorkPlace.startDate, "Start date of job")
+            TextFieldGeneric(data.lastWorkPlace.endDate, "End date of job")
+        }
+
         Button(
             onClick = {
                 Toast.makeText(
@@ -85,6 +128,7 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextFieldGeneric(initialValue: String, label: String) {
     var value by remember { mutableStateOf(initialValue) }
@@ -109,6 +153,6 @@ fun PersonalDetailsScreenPreview() {
     val mockData = PersonalDetailsMockData()
 
     ATSTheme {
-        PersonalDetailsScreen(mockData)
+        PersonalDetailsScreen(mockData, true)
     }
 }
