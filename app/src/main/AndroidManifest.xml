@@ -13,7 +13,7 @@
             android:theme="@style/Theme.ATS"
             tools:targetApi="31">
         <activity
-                android:name=".PersonalFillActivity"
+                android:name=".MainAppActivity"
                 android:exported="true"
                 android:theme="@style/Theme.ATS">
             <intent-filter>
