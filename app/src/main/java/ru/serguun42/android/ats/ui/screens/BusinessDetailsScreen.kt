@@ -23,13 +23,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.serguun42.android.ats.R
-import ru.serguun42.android.ats.data.mock.PersonalDetailsMockData
+import ru.serguun42.android.ats.data.mock.BusinessDetailsMockData
 import ru.serguun42.android.ats.ui.theme.ATSTheme
 import ru.serguun42.android.ats.ui.theme.EditorCardBackground
 import ru.serguun42.android.ats.ui.theme.Primary600
 
 @Composable
-fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boolean = false) {
+fun BusinessDetailsScreen(data: BusinessDetailsMockData, darkerBackground: Boolean = false) {
     val context = LocalContext.current
 
     Column(
@@ -46,12 +46,12 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boole
                 .background(shape = RoundedCornerShape(10.dp), color = EditorCardBackground)
                 .padding(16.dp, 16.dp)
                 .paint(
-                    painterResource(id = R.drawable.baseline_person_24),
-                    alignment = Alignment.TopStart,
+                    painterResource(id = R.drawable.baseline_business_24),
+                    alignment = Alignment.TopStart
                 ), verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "Fill personal details",
+                text = "Fill last workplace details",
                 color = Primary600,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium,
@@ -62,11 +62,12 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boole
                     .padding(0.dp, 8.dp)
             )
 
-            TextFieldGeneric(data.fullname, "Full name")
-            TextFieldGeneric(data.dob, "Date of birth (in YYYY-MM-DD format)")
-            TextFieldGeneric(data.jobTitle, "Desired job title")
-            TextFieldGeneric(data.locationCity, "Current location city")
-            TextFieldGeneric(data.locationCountry, "Current location country")
+            TextFieldGeneric(data.companyName, "Company name")
+            TextFieldGeneric(data.companyLocation, "Company location")
+            TextFieldGeneric(data.jobPosition, "Job position")
+            TextFieldGeneric(data.startDate, "Start date of job")
+            TextFieldGeneric(data.endDate, "End date of job")
+            TextFieldGeneric(data.duties, "Duties", true)
         }
 
         Button(
@@ -83,10 +84,10 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boole
 
 @Preview(showBackground = true)
 @Composable
-fun PersonalDetailsScreenPreview() {
-    val mockData = PersonalDetailsMockData()
+fun WorkDetailsScreenPreview() {
+    val mockData = BusinessDetailsMockData()
 
     ATSTheme {
-        PersonalDetailsScreen(mockData, true)
+        BusinessDetailsScreen(mockData, true)
     }
 }

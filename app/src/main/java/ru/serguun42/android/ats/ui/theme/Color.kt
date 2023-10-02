@@ -9,3 +9,4 @@ val Primary200 = Color(0xFF6587F6)
 val Primary100 = Color(0xFF8AA2F2)
 
 val EditorCardBackground = Color(0xFFFFFFFF)
+val SettingsBlockBackground = Color(0xFFF1F1F1)

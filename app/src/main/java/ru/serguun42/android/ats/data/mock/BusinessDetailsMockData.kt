@@ -1,6 +1,6 @@
 package ru.serguun42.android.ats.data.mock
 
-class WorkDetailsMockData() {
+class BusinessDetailsMockData() {
     var companyName: String = "Dunder Mifflin Paper Company, Inc"
     var companyLocation: String = "Кемь"
     var jobPosition: String = "Quality Assurance"
