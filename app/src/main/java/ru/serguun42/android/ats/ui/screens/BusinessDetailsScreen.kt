@@ -22,15 +22,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.serguun42.android.ats.R
-import ru.serguun42.android.ats.data.mock.BusinessDetailsMockData
 import ru.serguun42.android.ats.ui.theme.ATSTheme
 import ru.serguun42.android.ats.ui.theme.EditorCardBackground
 import ru.serguun42.android.ats.ui.theme.Primary600
+import ru.serguun42.android.ats.viewmodel.BusinessScreenViewModel
 
 @Composable
-fun BusinessDetailsScreen(data: BusinessDetailsMockData, darkerBackground: Boolean = false) {
+fun BusinessDetailsScreen(
+    viewModel: BusinessScreenViewModel = viewModel(),
+    darkerBackground: Boolean = false
+) {
     val context = LocalContext.current
+    val uiState = viewModel.uiState
 
     Column(
         modifier = Modifier
@@ -62,12 +67,12 @@ fun BusinessDetailsScreen(data: BusinessDetailsMockData, darkerBackground: Boole
                     .padding(0.dp, 8.dp)
             )
 
-            TextFieldGeneric(data.companyName, "Company name")
-            TextFieldGeneric(data.companyLocation, "Company location")
-            TextFieldGeneric(data.jobPosition, "Job position")
-            TextFieldGeneric(data.startDate, "Start date of job")
-            TextFieldGeneric(data.endDate, "End date of job")
-            TextFieldGeneric(data.duties, "Duties", true)
+            TextFieldGeneric(uiState.businessDetails.companyName, "Company name")
+            TextFieldGeneric(uiState.businessDetails.companyLocation, "Company location")
+            TextFieldGeneric(uiState.businessDetails.jobPosition, "Job position")
+            TextFieldGeneric(uiState.businessDetails.startDate, "Start date of job")
+            TextFieldGeneric(uiState.businessDetails.endDate, "End date of job")
+            TextFieldGeneric(uiState.businessDetails.duties, "Duties", true)
         }
 
         Button(
@@ -85,9 +90,7 @@ fun BusinessDetailsScreen(data: BusinessDetailsMockData, darkerBackground: Boole
 @Preview(showBackground = true)
 @Composable
 fun WorkDetailsScreenPreview() {
-    val mockData = BusinessDetailsMockData()
-
     ATSTheme {
-        BusinessDetailsScreen(mockData, true)
+        BusinessDetailsScreen(BusinessScreenViewModel(), true)
     }
 }

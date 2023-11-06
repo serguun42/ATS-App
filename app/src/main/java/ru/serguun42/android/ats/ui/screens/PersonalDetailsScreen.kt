@@ -22,15 +22,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.serguun42.android.ats.R
-import ru.serguun42.android.ats.data.mock.PersonalDetailsMockData
 import ru.serguun42.android.ats.ui.theme.ATSTheme
 import ru.serguun42.android.ats.ui.theme.EditorCardBackground
 import ru.serguun42.android.ats.ui.theme.Primary600
+import ru.serguun42.android.ats.viewmodel.PersonalScreenViewModel
 
 @Composable
-fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boolean = false) {
+fun PersonalDetailsScreen(
+    viewModel: PersonalScreenViewModel = viewModel(),
+    darkerBackground: Boolean = false
+) {
     val context = LocalContext.current
+    val uiState = viewModel.uiState
 
     Column(
         modifier = Modifier
@@ -62,11 +67,11 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boole
                     .padding(0.dp, 8.dp)
             )
 
-            TextFieldGeneric(data.fullname, "Full name")
-            TextFieldGeneric(data.dob, "Date of birth (in YYYY-MM-DD format)")
-            TextFieldGeneric(data.jobTitle, "Desired job title")
-            TextFieldGeneric(data.locationCity, "Current location city")
-            TextFieldGeneric(data.locationCountry, "Current location country")
+            TextFieldGeneric(uiState.personalDetails.fullname, "Full name")
+            TextFieldGeneric(uiState.personalDetails.dob, "Date of birth (in YYYY-MM-DD format)")
+            TextFieldGeneric(uiState.personalDetails.jobTitle, "Desired job title")
+            TextFieldGeneric(uiState.personalDetails.locationCity, "Current location city")
+            TextFieldGeneric(uiState.personalDetails.locationCountry, "Current location country")
         }
 
         Button(
@@ -84,9 +89,7 @@ fun PersonalDetailsScreen(data: PersonalDetailsMockData, darkerBackground: Boole
 @Preview(showBackground = true)
 @Composable
 fun PersonalDetailsScreenPreview() {
-    val mockData = PersonalDetailsMockData()
-
     ATSTheme {
-        PersonalDetailsScreen(mockData, true)
+        PersonalDetailsScreen(PersonalScreenViewModel(), true)
     }
 }

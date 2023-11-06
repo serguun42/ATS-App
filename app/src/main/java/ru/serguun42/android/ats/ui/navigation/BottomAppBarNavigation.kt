@@ -1,4 +1,4 @@
-package ru.serguun42.android.ats.navigation
+package ru.serguun42.android.ats.ui.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.material3.Icon
