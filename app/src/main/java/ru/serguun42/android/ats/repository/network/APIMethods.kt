@@ -2,6 +2,7 @@ package ru.serguun42.android.ats.repository.network
 
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -19,13 +20,13 @@ interface APIMethods {
     @POST("business/create")
     fun upsertBusinessDetails(@Body body: BusinessDetails): Call<BusinessDetails>
 
-    @POST("business/delete")
+    @DELETE("business/delete")
     fun deleteBusinessDetails(@Body body: BusinessDetails): Call<Boolean>
 
     @GET("business/get")
     fun getBusinessDetails(@Query("id") id: UUID): Call<BusinessDetails?>
 
-    @POST("personal/get")
+    @GET("personal/get")
     fun getPersonalDetails(): Call<PersonalDetails>
 
     @POST("personal/update")
