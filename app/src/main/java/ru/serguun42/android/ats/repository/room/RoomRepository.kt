@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import ru.serguun42.android.ats.model.BusinessDetails
 import ru.serguun42.android.ats.model.PersonalDetails
 import ru.serguun42.android.ats.repository.RepositoryActions
+import java.util.UUID
 
 class RoomRepository(application: Application) : RepositoryActions {
     private val detailsDAO: DetailsDAO
@@ -28,6 +29,10 @@ class RoomRepository(application: Application) : RepositoryActions {
 
     override fun deleteBusinessDetails(businessDetails: BusinessDetails) {
         return detailsDAO.deleteBusinessDetails(businessDetails)
+    }
+
+    override fun getBusinessDetails(id: UUID): LiveData<BusinessDetails?> {
+        return detailsDAO.getBusinessDetail(id)
     }
 
     override fun updatePersonalDetails(personalDetails: PersonalDetails) {

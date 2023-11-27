@@ -38,6 +38,10 @@ class MockRepository : RepositoryActions {
     override fun upsertBusinessDetails(businessDetails: BusinessDetails) {/* EMPTY */
     }
 
+    override fun getBusinessDetails(id: UUID): LiveData<BusinessDetails?> {
+        return MutableLiveData(businessDetails[0])
+    }
+
     override fun getPersonalDetails(): LiveData<PersonalDetails> {
         return MutableLiveData(personalDetails)
     }

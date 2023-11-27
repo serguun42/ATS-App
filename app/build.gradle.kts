@@ -84,6 +84,10 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:2.6.0")
     implementation("androidx.room:room-runtime:2.6.0")
 
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     // implementation("com.android.support:support-annotations:28.0.0")
     // implementation("com.google.devtools.ksp:symbol-processing-api:1.8.10-1.0.9")
     // ksp("com.google.devtools.ksp:ksp-processor:1.8.10-1.0.9")

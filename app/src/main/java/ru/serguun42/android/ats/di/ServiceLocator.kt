@@ -1,14 +1,16 @@
 package ru.serguun42.android.ats.di
 
 import android.app.Application
+import ru.serguun42.android.ats.di.util.isInternetAvailable
 import ru.serguun42.android.ats.repository.RepositoryActions
 import ru.serguun42.android.ats.repository.mock.MockRepository
+import ru.serguun42.android.ats.repository.network.APIRepository
 import ru.serguun42.android.ats.repository.room.RoomRepository
 
 class ServiceLocator {
     private lateinit var context: Application
 
-    // val api: RepositoryActions = APIRepository()
+    private val api: RepositoryActions = APIRepository()
     private val mock: RepositoryActions = MockRepository()
     private var room: RepositoryActions? = null
 
@@ -28,13 +30,8 @@ class ServiceLocator {
 
     val repository: RepositoryActions
         get() {
-//            if (isInternetAvailable(context)) Toast.makeText(
-//                context, "Internet is available", Toast.LENGTH_SHORT
-//            ).show() else Toast.makeText(
-//                context, "NO Internet ☹", Toast.LENGTH_SHORT
-//            ).show()
-
-            // if (isNetworkAvailable) return api
+            // Enable API repository later
+            if (isInternetAvailable(context) && 2 < 1) return api
             return room ?: mock
         }
 }

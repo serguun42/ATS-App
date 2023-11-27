@@ -17,14 +17,14 @@ interface DetailsDAO {
     @Query("SELECT * FROM business_detail SKIP LIMIT 10 OFFSET :skip")
     fun listBusinessDetails(skip: Int): LiveData<List<BusinessDetails>>
 
-    @Query("SELECT * FROM business_detail WHERE id = :id")
-    fun getBusinessDetailsById(id: UUID): LiveData<BusinessDetails>
-
     @Upsert
     fun upsertBusinessDetails(businessDetails: BusinessDetails)
 
     @Delete
     fun deleteBusinessDetails(businessDetails: BusinessDetails)
+
+    @Query("SELECT * FROM business_detail WHERE id = :id")
+    fun getBusinessDetail(id: UUID): LiveData<BusinessDetails?>
 
     @Query("SELECT * FROM personal_detail LIMIT 1")
     fun getPersonalDetails(): LiveData<PersonalDetails>
