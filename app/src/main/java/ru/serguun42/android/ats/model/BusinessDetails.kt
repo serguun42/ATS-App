@@ -1,6 +1,13 @@
 package ru.serguun42.android.ats.model
 
-abstract class BusinessDetails(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.UUID
+
+@Entity(tableName = "business_detail")
+class BusinessDetails(
+    @PrimaryKey
+    var id: UUID,
     var companyName: String,
     var companyLocation: String,
     var jobPosition: String,

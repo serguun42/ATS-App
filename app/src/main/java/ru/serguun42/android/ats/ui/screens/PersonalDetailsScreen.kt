@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -35,7 +36,8 @@ fun PersonalDetailsScreen(
     darkerBackground: Boolean = false
 ) {
     val context = LocalContext.current
-    val uiState = viewModel.uiState
+    val personalDetails = viewModel.dataState.observeAsState()
+    val personalDetailsValue = personalDetails.value
 
     Column(
         modifier = Modifier
@@ -67,11 +69,11 @@ fun PersonalDetailsScreen(
                     .padding(0.dp, 8.dp)
             )
 
-            TextFieldGeneric(uiState.personalDetails.fullname, "Full name")
-            TextFieldGeneric(uiState.personalDetails.dob, "Date of birth (in YYYY-MM-DD format)")
-            TextFieldGeneric(uiState.personalDetails.jobTitle, "Desired job title")
-            TextFieldGeneric(uiState.personalDetails.locationCity, "Current location city")
-            TextFieldGeneric(uiState.personalDetails.locationCountry, "Current location country")
+            TextFieldGeneric(personalDetailsValue?.fullname, "Full name")
+            TextFieldGeneric(personalDetailsValue?.dob, "Date of birth (in YYYY-MM-DD format)")
+            TextFieldGeneric(personalDetailsValue?.jobTitle, "Desired job title")
+            TextFieldGeneric(personalDetailsValue?.locationCity, "Current location city")
+            TextFieldGeneric(personalDetailsValue?.locationCountry, "Current location country")
         }
 
         Button(

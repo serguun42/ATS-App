@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
@@ -35,9 +37,11 @@ fun BusinessDetailsScreen(
     darkerBackground: Boolean = false
 ) {
     val context = LocalContext.current
-    val uiState = viewModel.uiState
+    val businessDetails = viewModel.dataState.observeAsState()
 
-    Column(
+    val businessDetailsValue = businessDetails.value
+
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp, 32.dp)
@@ -45,44 +49,65 @@ fun BusinessDetailsScreen(
                 if (darkerBackground) Color(0xFF555555) else Color.Transparent
             ), verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(shape = RoundedCornerShape(10.dp), color = EditorCardBackground)
-                .padding(16.dp, 16.dp)
-                .paint(
-                    painterResource(id = R.drawable.baseline_business_24),
-                    alignment = Alignment.TopStart
-                ), verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "Fill last workplace details",
-                color = Primary600,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Medium,
-                letterSpacing = (-0.4).sp,
-                textAlign = TextAlign.Center,
+        items(businessDetailsValue?.size ?: 0) { businessDetailIndex ->
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(0.dp, 8.dp)
-            )
+                    .background(shape = RoundedCornerShape(10.dp), color = EditorCardBackground)
+                    .padding(16.dp, 16.dp)
+                    .paint(
+                        painterResource(id = R.drawable.baseline_business_24),
+                        alignment = Alignment.TopStart
+                    ), verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "Fill last workplace details",
+                    color = Primary600,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    letterSpacing = (-0.4).sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 8.dp)
+                )
 
-            TextFieldGeneric(uiState.businessDetails.companyName, "Company name")
-            TextFieldGeneric(uiState.businessDetails.companyLocation, "Company location")
-            TextFieldGeneric(uiState.businessDetails.jobPosition, "Job position")
-            TextFieldGeneric(uiState.businessDetails.startDate, "Start date of job")
-            TextFieldGeneric(uiState.businessDetails.endDate, "End date of job")
-            TextFieldGeneric(uiState.businessDetails.duties, "Duties", true)
-        }
+                TextFieldGeneric(
+                    businessDetailsValue?.get(businessDetailIndex)?.companyName,
+                    "Company name"
+                )
+                TextFieldGeneric(
+                    businessDetailsValue?.get(businessDetailIndex)?.companyLocation,
+                    "Company location"
+                )
+                TextFieldGeneric(
+                    businessDetailsValue?.get(businessDetailIndex)?.jobPosition,
+                    "Job position"
+                )
+                TextFieldGeneric(
+                    businessDetailsValue?.get(businessDetailIndex)?.startDate,
+                    "Start date of job"
+                )
+                TextFieldGeneric(
+                    businessDetailsValue?.get(businessDetailIndex)?.endDate,
+                    "End date of job"
+                )
+                TextFieldGeneric(
+                    businessDetailsValue?.get(businessDetailIndex)?.duties,
+                    "Duties",
+                    true
+                )
 
-        Button(
-            onClick = {
-                Toast.makeText(
-                    context, "You've just applied with your details", Toast.LENGTH_SHORT
-                ).show()
-            }, modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(text = "Apply", fontWeight = FontWeight.Bold)
+                Button(
+                    onClick = {
+                        Toast.makeText(
+                            context, "You've just applied with your details", Toast.LENGTH_SHORT
+                        ).show()
+                    }, modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(text = "Apply", fontWeight = FontWeight.Bold)
+                }
+            }
         }
     }
 }

@@ -1,6 +1,11 @@
 package ru.serguun42.android.ats.model
 
-abstract class PersonalDetails(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "personal_detail")
+class PersonalDetails(
+    @PrimaryKey
     var fullname: String,
     var dob: String,
     var locationCity: String,

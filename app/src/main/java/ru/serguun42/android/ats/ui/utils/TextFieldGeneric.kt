@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldGeneric(initialValue: String, label: String, multiline: Boolean = false) {
-    var value by remember { mutableStateOf(initialValue) }
+fun TextFieldGeneric(initialValue: String?, label: String, multiline: Boolean = false) {
+    var value by remember { mutableStateOf(initialValue ?: "") }
 
     var modifier = Modifier
         .fillMaxWidth()
