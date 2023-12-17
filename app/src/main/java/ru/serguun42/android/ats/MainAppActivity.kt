@@ -10,12 +10,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.serguun42.android.ats.di.ServiceLocator
 import ru.serguun42.android.ats.ui.navigation.BottomAppBarNavigation
 import ru.serguun42.android.ats.ui.navigation.NavigationGraph
 import ru.serguun42.android.ats.ui.theme.ATSTheme
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainAppActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var serviceAdapter: ServiceLocator
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {

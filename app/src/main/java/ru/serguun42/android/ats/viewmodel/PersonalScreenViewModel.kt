@@ -5,13 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.serguun42.android.ats.di.ServiceLocator
 import ru.serguun42.android.ats.model.PersonalDetails
 import ru.serguun42.android.ats.repository.mock.MockRepository
+import javax.inject.Inject
 
-class PersonalScreenViewModel : ViewModel() {
-    private val repository = ServiceLocator.getInstance().repository
+@HiltViewModel
+class PersonalScreenViewModel @Inject constructor(
+    serviceLocator: ServiceLocator
+) : ViewModel() {
+    private val repository = serviceLocator.repository
     private val _dataState = MutableLiveData<PersonalDetails>()
     val dataState: LiveData<PersonalDetails> get() = _dataState
 

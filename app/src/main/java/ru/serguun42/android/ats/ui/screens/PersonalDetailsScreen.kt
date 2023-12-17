@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.serguun42.android.ats.R
+import ru.serguun42.android.ats.di.ServiceLocator
 import ru.serguun42.android.ats.ui.theme.ATSTheme
 import ru.serguun42.android.ats.ui.theme.EditorCardBackground
 import ru.serguun42.android.ats.ui.theme.Primary600
@@ -145,6 +146,6 @@ fun PersonalDetailsScreen(
 @Composable
 fun PersonalDetailsScreenPreview() {
     ATSTheme {
-        PersonalDetailsScreen(PersonalScreenViewModel(), true)
+        PersonalDetailsScreen(PersonalScreenViewModel(ServiceLocator()), true)
     }
 }

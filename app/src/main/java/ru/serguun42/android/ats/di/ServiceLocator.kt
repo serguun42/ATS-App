@@ -6,8 +6,11 @@ import ru.serguun42.android.ats.repository.RepositoryActions
 import ru.serguun42.android.ats.repository.mock.MockRepository
 import ru.serguun42.android.ats.repository.network.APIRepository
 import ru.serguun42.android.ats.repository.room.RoomRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ServiceLocator {
+@Singleton
+class ServiceLocator @Inject constructor() {
     private lateinit var context: Application
 
     private val api: RepositoryActions = APIRepository()
