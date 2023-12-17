@@ -32,8 +32,7 @@ import ru.serguun42.android.ats.viewmodel.PersonalScreenViewModel
 
 @Composable
 fun PersonalDetailsScreen(
-    viewModel: PersonalScreenViewModel = viewModel(),
-    darkerBackground: Boolean = false
+    viewModel: PersonalScreenViewModel = viewModel(), darkerBackground: Boolean = false
 ) {
     val context = LocalContext.current
     val personalDetails = viewModel.dataState.observeAsState()
@@ -69,18 +68,72 @@ fun PersonalDetailsScreen(
                     .padding(0.dp, 8.dp)
             )
 
-            TextFieldGeneric(personalDetailsValue?.fullname, "Full name")
-            TextFieldGeneric(personalDetailsValue?.dob, "Date of birth (in YYYY-MM-DD format)")
-            TextFieldGeneric(personalDetailsValue?.jobTitle, "Desired job title")
-            TextFieldGeneric(personalDetailsValue?.locationCity, "Current location city")
-            TextFieldGeneric(personalDetailsValue?.locationCountry, "Current location country")
+            TextFieldGeneric(label = "Full name",
+                getter = { personalDetailsValue?.fullname },
+                setter = {
+                    Toast.makeText(
+                        context,
+                        "New value – $it, NULL – ${if (personalDetailsValue == null) "YES" else "NO"}",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    if (personalDetailsValue != null) {
+                        personalDetailsValue.fullname = it
+                        viewModel.savePersonalDetails(personalDetailsValue)
+                    }
+                })
+            TextFieldGeneric(
+                label = "Date of birth (in YYYY-MM-DD format)",
+                getter = { personalDetailsValue?.dob },
+                setter = {
+                    if (personalDetailsValue != null) {
+                        personalDetailsValue.dob = it
+                        viewModel.savePersonalDetails(personalDetailsValue)
+                    }
+                })
+            TextFieldGeneric(
+                label = "Desired job title",
+                getter = { personalDetailsValue?.jobTitle },
+                setter = {
+                    if (personalDetailsValue != null) {
+                        personalDetailsValue.jobTitle = it
+                        viewModel.savePersonalDetails(personalDetailsValue)
+                    }
+                })
+            TextFieldGeneric(
+                label = "Current location city",
+                getter = { personalDetailsValue?.locationCity },
+                setter = {
+                    if (personalDetailsValue != null) {
+                        personalDetailsValue.locationCity = it
+                        viewModel.savePersonalDetails(personalDetailsValue)
+                    }
+                })
+            TextFieldGeneric(
+                label = "Current location country",
+                getter = { personalDetailsValue?.locationCountry },
+                setter = {
+                    if (personalDetailsValue != null) {
+                        personalDetailsValue.locationCountry = it
+                        viewModel.savePersonalDetails(personalDetailsValue)
+                    }
+                }
+            )
         }
 
         Button(
             onClick = {
                 Toast.makeText(
-                    context, "You've just applied with your details", Toast.LENGTH_SHORT
+                    context, "You've just applied with your personal details${
+                        if (personalDetailsValue !== null && personalDetailsValue.fullname.isNotEmpty()) {
+                            ", " + personalDetailsValue.fullname
+                        } else ""
+                    }", Toast.LENGTH_LONG
                 ).show()
+
+                if (personalDetailsValue != null) viewModel.savePersonalDetails(
+                    personalDetailsValue
+                )
             }, modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
             Text(text = "Apply", fontWeight = FontWeight.Bold)

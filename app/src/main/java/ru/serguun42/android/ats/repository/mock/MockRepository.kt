@@ -8,7 +8,7 @@ import ru.serguun42.android.ats.repository.RepositoryActions
 import java.util.UUID
 
 class MockRepository : RepositoryActions {
-    private val businessDetails = listOf(
+    val businessDetails = listOf(
         BusinessDetails(
             UUID.randomUUID(),
             "Dunder Mifflin Paper Company, Inc",
@@ -20,7 +20,7 @@ class MockRepository : RepositoryActions {
         )
     )
 
-    private val personalDetails = PersonalDetails(
+    val personalDetails = PersonalDetails(
         "John Doe", "1990-10-20", "Moscow", "Russia", "Operation Commissioning Supervisor"
     )
 

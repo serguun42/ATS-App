@@ -9,15 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldGeneric(initialValue: String?, label: String, multiline: Boolean = false) {
-    var value by remember { mutableStateOf(initialValue ?: "") }
+fun TextFieldGeneric(
+    label: String,
+    getter: () -> String?,
+    setter: (value: String) -> Unit,
+    multiline: Boolean = false
+) {
+    val value by remember { mutableStateOf(getter() ?: "") }
 
     var modifier = Modifier
         .fillMaxWidth()
@@ -27,7 +31,10 @@ fun TextFieldGeneric(initialValue: String?, label: String, multiline: Boolean = 
 
     TextField(
         value = value,
-        onValueChange = { value = it },
+        onValueChange = {
+            setter(it)
+            return@TextField
+        },
         label = { Text(label) },
         placeholder = { Text("Do not leave this field empty") },
         modifier = modifier,
